@@ -18,6 +18,7 @@ users_table = Table(
 trees_table = Table(
     "trees",
     metadata_obj,
+    Column("id", Integer, primary_key=True),
     Column("user_id", ForeignKey("users.id", ondelete="CASCADE")),
     Column("title", String),
     Column("description", String, nullable=True),
@@ -35,6 +36,8 @@ class CharacterType(enum.Enum):
 characters_table = Table(
     "characters",
     metadata_obj,
+    Column("id", Integer, primary_key=True),
+    Column("tree_id", ForeignKey("trees.id", ondelete="CASCADE")),
     Column("first_name", String),
     Column("last_name", String),
     Column("character_type", Enum(CharacterType))
