@@ -1,5 +1,5 @@
-from src.config.models import Base, CharactersOrm, UsersOrm
-from src.config.database import sync_engine, sync_session_factory, async_session_factory
+from src.config.models import Base, CharactersOrm, UsersOrm, SpeciesOrm
+from src.config.database import sync_engine, async_engine, sync_session_factory, async_session_factory
 from src.utils.decorators import sync_echo
 from sqlalchemy import select
 
@@ -18,6 +18,17 @@ class SyncOrm:
                 CharactersOrm(first_name="Petr", last_name="Petrov")
             ]
             session.add_all(tmp_chars)
+            session.commit()
+
+    @staticmethod
+    def sync_insert_defaults():
+        default_species = [
+            SpeciesOrm(title="human", icon="", is_default=True),
+            SpeciesOrm(title="alien", icon="", is_default=False),
+            SpeciesOrm(title="vampire", icon="", is_default=False),
+        ]
+        with sync_session_factory() as session:
+            session.add_all(default_species)
             session.commit()
 
     @staticmethod
@@ -47,6 +58,12 @@ class SyncOrm:
 
 
 class AsyncOrm:
+    @staticmethod
+    async def setup_database():
+        async with async_engine.begin() as conn:
+            await conn.run_sync(Base.metadata.drop_all)
+            await conn.run_sync(Base.metadata.create_all)
+
     @staticmethod
     async def async_insert_char():
         async with async_session_factory() as session:

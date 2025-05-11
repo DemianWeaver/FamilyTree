@@ -5,7 +5,7 @@ from uuid import UUID, uuid4
 
 from sqlalchemy import ForeignKey, text, String
 from sqlalchemy.dialects.postgresql import UUID as UUID_PG
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 intpk = Annotated[int, mapped_column(primary_key=True)]
 uuidpk = Annotated[UUID, mapped_column(UUID_PG(as_uuid=True), primary_key=True, default=uuid4)]
@@ -32,7 +32,10 @@ class UsersOrm(Base):
     __tablename__ = "users"
     id: Mapped[uuidpk]
     username: Mapped[str]
+    password: Mapped[str]
     created_at: Mapped[created_datetime]
+
+    trees: Mapped[list["TreesOrm"]] = relationship(back_populates="user")
 
 
 class TreesOrm(Base):
@@ -43,6 +46,8 @@ class TreesOrm(Base):
     description: Mapped[str | None]  # todo: указать максимальный размер
     created_at: Mapped[created_datetime]
     updated_at: Mapped[updated_datetime]
+
+    user: Mapped["UsersOrm"] = relationship(back_populates="trees")
 
 
 class SpeciesOrm(Base):
