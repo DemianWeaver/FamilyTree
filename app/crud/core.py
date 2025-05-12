@@ -1,7 +1,6 @@
-from sqlalchemy import select, insert, update, text
-from src.config.database import sync_engine, async_engine
-from src.config.tables import metadata_obj, users_table
-from src.utils.decorators import sync_echo
+from sqlalchemy import select, insert, update
+from app.db.database import sync_engine
+from app.models.tables import metadata_obj, users_table
 
 
 class SyncCore:

@@ -1,10 +1,10 @@
-import asyncio
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from typing import Annotated
+from fastapi import Depends
 
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-
-from src.config.config import settings
+from app.core.config import settings
 
 sync_engine = create_engine(
     url=settings.db_url_psycopg,
@@ -27,3 +27,5 @@ async_session_factory = async_sessionmaker(async_engine, expire_on_commit=False)
 async def get_async_session():
     async with async_session_factory() as session:
         yield session
+
+AsyncSessionDep = Annotated[AsyncSession, Depends(get_async_session)]

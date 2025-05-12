@@ -1,5 +1,5 @@
 from functools import wraps
-from src.config.database import sync_engine, async_engine
+from app.db.database import sync_engine, async_engine
 
 
 def sync_echo():

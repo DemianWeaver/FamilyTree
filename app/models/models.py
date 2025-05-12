@@ -32,6 +32,7 @@ class UsersOrm(Base):
     __tablename__ = "users"
     id: Mapped[uuidpk]
     username: Mapped[str]
+    email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
     created_at: Mapped[created_datetime]
 

@@ -1,15 +1,29 @@
-from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from datetime import datetime
+from uuid import UUID
+
+from pydantic import BaseModel, Field, EmailStr
 
 
-class NewUserSchema(BaseModel):
-    username: str
+class BaseSchema(BaseModel):
+    class Config:
+        from_attributes = True
+
+
+class UserLoginSchema(BaseModel):
+    """ Для аутентификации пользователя """
+    email: EmailStr
     password: str = Field(min_length=8)
 
 
+class NewUserSchema(UserLoginSchema):
+    username: str
+
+
 class UserSchema(NewUserSchema):
-    id: str  # todo: переделать на uuid если нужно
+    id: UUID
     created_at: datetime
+
+
 
 
 # class UserSchema(BaseModel):

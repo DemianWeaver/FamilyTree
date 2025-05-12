@@ -1,6 +1,5 @@
-from src.config.models import Base, CharactersOrm, UsersOrm, SpeciesOrm
-from src.config.database import sync_engine, async_engine, sync_session_factory, async_session_factory
-from src.utils.decorators import sync_echo
+from app.models.models import Base, CharactersOrm, UsersOrm, SpeciesOrm
+from app.db.database import sync_engine, async_engine, sync_session_factory, async_session_factory
 from sqlalchemy import select
 
 
