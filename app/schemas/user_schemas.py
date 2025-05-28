@@ -1,15 +1,12 @@
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import Field, EmailStr
+
+from app.schemas.base_schemas import BaseSchema
 
 
-class BaseSchema(BaseModel):
-    class Config:
-        from_attributes = True
-
-
-class UserLoginSchema(BaseModel):
+class UserLoginSchema(BaseSchema):
     """ Для аутентификации пользователя """
     email: EmailStr
     password: str = Field(min_length=8)
@@ -22,8 +19,6 @@ class NewUserSchema(UserLoginSchema):
 class UserSchema(NewUserSchema):
     id: UUID
     created_at: datetime
-
-
 
 
 # class UserSchema(BaseModel):

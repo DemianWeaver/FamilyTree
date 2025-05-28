@@ -42,7 +42,7 @@ class UsersOrm(Base):
 class TreesOrm(Base):
     __tablename__ = "trees"
     id: Mapped[uuidpk]
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     title: Mapped[str_n(16)]
     description: Mapped[str | None]  # todo: указать максимальный размер
     created_at: Mapped[created_datetime]

@@ -1,13 +1,13 @@
-from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
-from app.db.database import AsyncSessionDep
+from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy import select
 
 from app.core.config import settings
+from app.db.database import AsyncSessionDep
 from app.models.models import UsersOrm
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/sign_in")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/sign_in/swagger")
 
 
 async def get_current_user(session: AsyncSessionDep, token: str | None = Depends(oauth2_scheme)):
