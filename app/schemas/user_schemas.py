@@ -21,6 +21,11 @@ class UserSchema(NewUserSchema):
     created_at: datetime
 
 
+class PublicUserSchema(BaseSchema):
+    username: str
+    email: EmailStr
+    created_at: datetime
+
 # class UserSchema(BaseModel):
 #     email: EmailStr
 #     password: str = Field(min_length=8)
